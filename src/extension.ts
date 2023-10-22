@@ -13,6 +13,7 @@ class Replacer
 	readonly repl: string;
 	readonly reFlags?: string;
 	readonly transform?: string;
+	readonly ignored?: string;
 
 	constructor(args: string[])
 	{
@@ -25,7 +26,8 @@ class Replacer
 		this.pattern = args[0];
 		this.repl = args[1];
 		this.reFlags = flags.includes('i') ? 'i' : undefined;
-		this.transform = flags.match(/[ulp]/)?.[0];
+		this.transform = flags.match(/[tulp]/)?.[0];
+		this.ignored = args.length > 3 ? args[3] : undefined;
 	}
 }
 
@@ -132,8 +134,6 @@ class AutoCorrect
 				{
 					const nt = this.findReplacementText(last[0], repls);
 
-					console.log('match: %O %O', last, repls);
-
 					if (nt) {
 						editor.edit(e => {
 							const wordStart = lineStart.translate(0, last.index);
@@ -156,7 +156,10 @@ class AutoCorrect
 
 			if (m) {
 				const nt = text.replace(re, repl.repl);
-				return transformText(nt, text, repl.transform);
+				const res = transformText(nt, text, repl.transform);
+
+				console.log('REPLACED "%O" with "%O" (%O)', text, res, repl);
+				return res;
 			}
 		}
 
