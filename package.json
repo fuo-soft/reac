@@ -1,0 +1,139 @@
+{
+	"name": "ac",
+	"displayName": "ac",
+	"description": "auto-correct",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.83.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:type"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "ACCFG",
+			"properties": {
+				"ac.replacers": {
+					"type": "array",
+					"default": [
+						{
+							"languages": [
+								".*"
+							],
+							"patterns": [
+								[
+									"[A-Z]{2}[a-z]+",
+									"$&",
+									"t",
+									"FIxes my HEavy SHift KEy"
+								]
+							]
+						},
+						{
+							"languages": [
+								"(java|type)script(react)?|c(pp|sharp)?|java"
+							],
+							"patterns": [
+								[
+									"c(nost|osnt|onts)",
+									"const"
+								],
+								[
+									"pubic",
+									"public"
+								]
+							]
+						},
+						{
+							"languages": [
+								"markdown|plaintext"
+							],
+							"patterns": [
+								[
+									"abuot",
+									"about",
+									"ip"
+								],
+								[
+									"atfer",
+									"after",
+									"ip"
+								],
+								[
+									"agian(st)?",
+									"again$1",
+									"ip"
+								],
+								[
+									"aslo",
+									"also",
+									"ip"
+								],
+								[
+									"([bnmst])a",
+									"a$1",
+									"ip"
+								],
+								[
+									"a([dty])n",
+									"an$1",
+									"ip"
+								],
+								[
+									"e([bhw])",
+									"$1e",
+									"ip"
+								],
+								[
+									"ti(s)?",
+									"it$1",
+									"ip"
+								],
+								[
+									"([fns])i",
+									"i$1",
+									"ip"
+								],
+								[
+									"teh|hte|t[he]([ny]?)",
+									"the$1",
+									"ip"
+								],
+								[
+									"w(ehn|hne)",
+									"when",
+									"ip"
+								]
+							]
+						}
+					]
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.83.0",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "16.x",
+		"@typescript-eslint/eslint-plugin": "^6.4.1",
+		"@typescript-eslint/parser": "^6.4.1",
+		"eslint": "^8.47.0",
+		"glob": "^10.3.3",
+		"mocha": "^10.2.0",
+		"typescript": "^5.1.6",
+		"@vscode/test-electron": "^2.3.4"
+	}
+}
