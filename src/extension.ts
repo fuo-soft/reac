@@ -151,7 +151,7 @@ class AutoCorrect
 	{
 		for (const repl of repls)
 		{
-			const re = new RegExp(repl.pattern, repl.reFlags);
+			const re = new RegExp('^' + repl.pattern + '$', repl.reFlags);
 			const m = text.match(re);
 
 			if (m) {
