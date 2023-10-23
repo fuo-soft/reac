@@ -31,6 +31,12 @@
 									"$&",
 									"t",
 									"FIxes my HEavy SHift KEy"
+								],
+								[
+									"([a-z])\\1{2,}",
+									"$1$1",
+									"igsp",
+									"tooo many"
 								]
 							]
 						},
