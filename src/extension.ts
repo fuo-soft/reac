@@ -11,7 +11,7 @@ class Replacer
 {
 	readonly pattern: string;
 	readonly repl: string;
-	readonly reFlags?: string;
+	readonly regex: RegExp;
 	readonly transform?: string;
 	readonly ignored?: string;
 
@@ -22,12 +22,19 @@ class Replacer
 		}
 
 		const flags = args.length > 2 ? args[2] : '';
+		const reflags = flags.match(/[ig]+/)?.[0];
 
 		this.pattern = args[0];
 		this.repl = args[1];
-		this.reFlags = flags.includes('i') ? 'i' : undefined;
 		this.transform = flags.match(/[tulp]/)?.[0];
 		this.ignored = args.length > 3 ? args[3] : undefined;
+
+		if (flags.includes('s')) {
+			this.regex = new RegExp(this.pattern, reflags);
+		}
+		else {
+			this.regex = new RegExp('^' + this.pattern + '$', reflags);
+		}
 	}
 }
 
@@ -76,9 +83,13 @@ class AutoCorrect
 
 	ensureCfgLoaded(force: boolean)
 	{
-		if ((!this.all || force) && vsc.window.activeTextEditor) {
+		if ((!this.all || force) && vsc.window.activeTextEditor)
+		{
 			const cfg = vsc.workspace.getConfiguration('ac', vsc.window.activeTextEditor.document.uri);
+			
 			this.all = cfg.get<Repl[]>('replacers');
+			this.languageMap.clear();
+			
 			console.log('loaded cfg %o', this.all);
 		}
 
@@ -101,6 +112,7 @@ class AutoCorrect
 				.map(d => d["patterns"].map(p => new Replacer(p)))
 				.flat();
 			
+				console.log('LANG %s: %O', languageId, repls);
 				this.languageMap.set(languageId, repls);
 		}
 
@@ -151,14 +163,13 @@ class AutoCorrect
 	{
 		for (const repl of repls)
 		{
-			const re = new RegExp('^' + repl.pattern + '$', repl.reFlags);
-			const m = text.match(re);
+			const m = text.match(repl.regex);
 
 			if (m) {
-				const nt = text.replace(re, repl.repl);
+				const nt = text.replace(repl.regex, repl.repl);
 				const res = transformText(nt, text, repl.transform);
 
-				console.log('REPLACED "%O" with "%O" (%O)', text, res, repl);
+				console.log('REPLACING "%O" with "%O" (%O)', text, res, repl);
 				return res;
 			}
 		}
