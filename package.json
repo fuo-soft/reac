@@ -96,6 +96,12 @@
 									"ip"
 								],
 								[
+									"(fro?|ofr|orf)",
+									"for",
+									"ip",
+									"i'm on the fence about including 'fro' as a mispelling"
+								],
+								[
 									"ti(s)?",
 									"it$1",
 									"ip"
@@ -106,8 +112,39 @@
 									"ip"
 								],
 								[
-									"teh|hte|t[he]([ny]?)",
-									"the$1",
+									"([fhnr])o",
+									"o$1",
+									"ip"
+								],
+								[
+									"o([gst])",
+									"$1o",
+									"ip"
+								],
+								[
+									"([bcr]a|(br|l|sp)i|[ms]e|scu)t(le|el)",
+									"$1ttle",
+									"ip"
+								],
+								[
+									"(teh|hte|t[he])([my])?",
+									"the$2",
+									"ip"
+								],
+								[
+									"(teh|hte|th)n",
+									"then",
+									"ip",
+									"Special case: 'ten' is a word"
+								],
+								[
+									"([hmps])u",
+									"u$1",
+									"ip"
+								],
+								[
+									"w(il|li)",
+									"will",
 									"ip"
 								],
 								[
