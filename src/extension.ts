@@ -1,6 +1,6 @@
 import * as vsc from 'vscode';
 
-const NAME = 'ac';
+const NAME = 'reac';
 
 interface Repl {
 	languages: string[];
@@ -85,7 +85,7 @@ class AutoCorrect
 	{
 		if ((!this.all || force) && vsc.window.activeTextEditor)
 		{
-			const cfg = vsc.workspace.getConfiguration('ac', vsc.window.activeTextEditor.document.uri);
+			const cfg = vsc.workspace.getConfiguration(NAME, vsc.window.activeTextEditor.document.uri);
 			
 			this.all = cfg.get<Repl[]>('replacers');
 			this.languageMap.clear();

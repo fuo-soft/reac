@@ -1,8 +1,15 @@
 {
-	"name": "ac",
-	"displayName": "ac",
+	"name": "reac",
+	"displayName": "REgex-based Auto Correct",
 	"description": "auto-correct",
 	"version": "0.0.1",
+	"publisher": "fuo-soft",
+	"license": "LGPL-3.0-or-later",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/fuo-soft/reac"
+	},
+	"funding": "https://www.buymeacoffee.com/fuosoft",
 	"engines": {
 		"vscode": "^1.83.0"
 	},
@@ -16,9 +23,9 @@
 	"contributes": {
 		"configuration": {
 			"type": "object",
-			"title": "ACCFG",
+			"title": "ac",
 			"properties": {
-				"ac.replacers": {
+				"reac.replacers": {
 					"type": "array",
 					"default": [
 						{
@@ -46,12 +53,16 @@
 							],
 							"patterns": [
 								[
-									"c(nost|osnt|onts)",
-									"const"
+									"pirate",
+									"private"
 								],
 								[
 									"pubic",
 									"public"
+								],
+								[
+									"c(nost|osnt|onts)",
+									"const"
 								]
 							]
 						},
@@ -83,6 +94,16 @@
 								[
 									"([bnmst])a",
 									"a$1",
+									"ip"
+								],
+								[
+									"([bcfghtw])([ai])l",
+									"$1$2ll",
+									"ip"
+								],
+								[
+									"([kstw])il",
+									"$1ill",
 									"ip"
 								],
 								[
