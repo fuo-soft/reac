@@ -23,7 +23,7 @@
 	"contributes": {
 		"configuration": {
 			"type": "object",
-			"title": "ac",
+			"title": "reac",
 			"properties": {
 				"reac.replacers": {
 					"type": "array",
@@ -114,6 +114,11 @@
 								[
 									"e([bhw])",
 									"$1e",
+									"ip"
+								],
+								[
+									"pu",
+									"up",
 									"ip"
 								],
 								[
