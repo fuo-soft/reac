@@ -1,16 +1,12 @@
 # reac README
 
-regexp-based auto correction. Auto-corrects typ0s using regexp-base rules, with extended flags which allow for case preservation and transformation.
+regexp-based auto correction
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Auto-corrects typ0s using regexp-base rules, with extended flags which allow for case preservation and transformation.
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+\!\[feature X\]\(./reac.gif\)
 
 ## Requirements
 
@@ -78,9 +74,7 @@ Any list-items following the 3rd one are ignored. In the examples below with 4 i
 
 ## Known Issues / TODO
 
-- I would prefer to match the current scope, instead of/in addition to, language, but AFAIK, VSC doesn't expose this... yet? I may look into 3rd party solutions for this in the future.
-- Need to make auto-correction trigger characters (currently non-word chars (/\W/))
-- Need to make pattern for selecting the previous word configurable (currentl word chars (\w+))
+- I would prefer to match teh scope of the current position, instead of/in addition to, document language, but AFAIK, VSC doesn't expose this... yet? I may look into 3rd party solutions for this in the future...
 - Fix typ0s in this file
 
 ## Release Notes

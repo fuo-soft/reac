@@ -4,10 +4,21 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+            "type": "shell",
+            "label": "Sample",
+            "command": "echo PWD=$PWD workspaceFolder=${workspaceFolder}",
+            "options": {
+              "cwd": "${workspaceFolder}"
+            }
+        },
+		{
 			"type": "npm",
 			"script": "watch",
 			"problemMatcher": "$tsc-watch",
 			"isBackground": true,
+			"options": {
+				"cwd": "${fileDirname}"
+			},
 			"presentation": {
 				"reveal": "never"
 			},

@@ -4,7 +4,7 @@
 	"description": "auto-correct",
 	"version": "0.0.1",
 	"publisher": "fuo-soft",
-	"license": "LGPL-3.0-or-later",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/fuo-soft/reac"
@@ -39,15 +39,6 @@
 				"reac.wordPattern": {
 					"type": "string",
 					"default": "\\w+"
-				},
-				"reac.replacerSource": {
-					"type": "string",
-					"enum": [
-						"internal",
-						"external",
-						"both"
-					],
-					"default": "external"
 				},
 				"reac.replacers": {
 					"type": "array",
@@ -193,12 +184,17 @@
 									"Special case: 'ten' is a word"
 								],
 								[
+									"th?ere?",
+									"there",
+									"ip"
+								],
+								[
 									"([hmps])u",
 									"u$1",
 									"ip"
 								],
 								[
-									"w(il|li)",
+									"wl?(il|li)",
 									"will",
 									"ip"
 								],
