@@ -12,11 +12,11 @@ Auto-corrects typ0s using regexp-base rules, with extended flags which allow for
 
 ## Extension Settings
 
-The reac.replacers setting contains all of the rules for auto-correct.
+The `reac.replacers` setting contains all of the rules for auto-correct.
 
-First, the language of the current file is matched against all "languages" regexps, in order. So in the example below, a markdown file would use the first and the third block. A C file would use the first and the second.
+First, the language of the current file is matched against all `languages` regexps, in order. So in the example below, a markdown file would use the first and the third block. A C file would use the first and the second.
 
-"patterns" is a list of lists containing the patterns to match, their replace text and any flags. This is very similar to the usual regexp s// syntax, but the flags item has additional options, and the usual regexp flags are limited to the applicable ones:
+`patterns` is a list of lists containing the patterns to match, their replace text and any flags. This is very similar to the usual regexp s// syntax, but the flags item has additional options, and the usual regexp flags are limited to the applicable ones:
 
 ### Flags
 - Standard Regexp Flags
