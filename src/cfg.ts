@@ -2,6 +2,8 @@ import * as vsc from 'vscode';
 import getInternalRepls from './internal.js';
 
 const NAME = 'reac';
+const DEFAULT_TRIGGER_PATTERN = /\W/;
+const DEFAULT_WORD_PATTERN = /\w+/;
 
 interface Repl {
 	languages: string[];
@@ -43,23 +45,44 @@ export default class Cfg
 {
 	private languageMap = new Map<string, Replacer[]>();
 	private all?: Repl[];
+	private _triggerPattern: RegExp = DEFAULT_TRIGGER_PATTERN;
+	private _wordPattern: RegExp = DEFAULT_WORD_PATTERN;
 
 	constructor()
 	{
 		vsc.workspace.onDidChangeConfiguration(evt => this.onDidChangeConfiguration(evt));
 	}
 
+	get triggerPattern() {
+		return this._triggerPattern;
+	}
+
+	get wordPattern() {
+		return this._wordPattern;
+	}
+
 	ensureCfgLoaded(force: boolean)
 	{
 		if ((!this.all || force) && vsc.window.activeTextEditor)
 		{
-			//const cfg = vsc.workspace.getConfiguration(NAME, vsc.window.activeTextEditor.document.uri);
-			
-			//this.all = cfg.get<Repl[]>('replacers');
-			this.all = <Repl[]>getInternalRepls();
+			const cfg = vsc.workspace.getConfiguration(NAME, vsc.window.activeTextEditor.document.uri);
+			const internal = <Repl[]>getInternalRepls();
+			const external = cfg.get<Repl[]>('replacers') ?? [];
+			const src = cfg.get('replacerSource', 'both');
+
+			this.all = (src === 'both' || src === 'internal') ? internal : [];
+
+			if (src === 'both' || src === 'external') {
+				this.all = [...this.all, ...external];
+			}
+	
 			this.languageMap.clear();
-			
-			console.log('loaded cfg %o', this.all);
+
+			this._triggerPattern = new RegExp(cfg.get('triggerPattern', DEFAULT_TRIGGER_PATTERN));
+			this._wordPattern = new RegExp(cfg.get('wordPattern', DEFAULT_WORD_PATTERN));
+
+			console.log('loaded cfg tp=%o wp=%o src=%o all=%o',
+				this._triggerPattern, this._wordPattern, src, this.all);
 		}
 
 		return this.all;

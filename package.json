@@ -21,10 +21,34 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"commands": [
+			{
+				"command": "reac.reloadCfg",
+				"category": "reac",
+				"title": "Reload Configuration"
+			}
+		],
 		"configuration": {
 			"type": "object",
 			"title": "reac",
 			"properties": {
+				"reac.triggerPattern": {
+					"type": "string",
+					"default": "\\W"
+				},
+				"reac.wordPattern": {
+					"type": "string",
+					"default": "\\w+"
+				},
+				"reac.replacerSource": {
+					"type": "string",
+					"enum": [
+						"internal",
+						"external",
+						"both"
+					],
+					"default": "external"
+				},
 				"reac.replacers": {
 					"type": "array",
 					"default": [

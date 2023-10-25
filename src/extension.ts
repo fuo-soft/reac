@@ -42,12 +42,23 @@ class AutoCorrect
 	{
 		this.cfg = new Cfg();
 		vsc.workspace.onDidChangeTextDocument(evt => this.onDidChangeTextDocument(evt));
+
+		context.subscriptions.push(
+			vsc.commands.registerCommand('reac.reloadCfg', () => {
+				this.cfg.ensureCfgLoaded(true);
+			})
+		);
 	}
 
 	onDidChangeTextDocument(evt: vsc.TextDocumentChangeEvent)
 	{
 		const editor = vsc.window.activeTextEditor;
 
+		if (!this.cfg.ensureCfgLoaded(false)) {
+			console.warn('no cfg');
+			return;
+		}
+		
 		if (editor && editor.document === evt.document &&
 			evt.contentChanges.length && evt.contentChanges[0].text.match(/\W/))
 		{
@@ -57,11 +68,6 @@ class AutoCorrect
 			const line = new vsc.Range(lineStart, start);
 			const text = editor.document.getText(line);
 			const last = text.match(/\w+$/);
-
-			if (!this.cfg.ensureCfgLoaded(false)) {
-				console.warn('no cfg');
-				return;
-			}
 
 			if (last)
 			{
