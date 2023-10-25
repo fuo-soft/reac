@@ -38,7 +38,7 @@
 				},
 				"reac.wordPattern": {
 					"type": "string",
-					"default": "\\w+"
+					"default": "\\w+$"
 				},
 				"reac.replacers": {
 					"type": "array",
