@@ -142,8 +142,8 @@ export default function getInternalRepls()
                     "Special case: 'ten' is a word"
                 ],
                 [
-                    "th?ere?",
-                    "there",
+                    "([tw])h?ere?",
+                    "$1here",
                     "ip"
                 ],
                 [
@@ -152,7 +152,7 @@ export default function getInternalRepls()
                     "ip"
                 ],
                 [
-                    "w(il|li)",
+                    "w(il|li)l?",
                     "will",
                     "ip"
                 ],
