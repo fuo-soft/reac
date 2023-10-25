@@ -6,7 +6,7 @@ regexp-based auto correction
 
 Auto-corrects typ0s using regexp-base rules, with extended flags which allow for case preservation and transformation.
 
-\!\[feature X\]\(./reac.gif\)
+![reac](./reac.gif)
 
 ## Requirements
 
