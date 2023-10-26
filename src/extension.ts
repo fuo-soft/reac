@@ -70,6 +70,8 @@ class AutoCorrect
 			const text = editor.document.getText(line);
 			const last = text.match(this.cfg.wordPattern);
 
+			console.log('checking %o', last);
+
 			if (last)
 			{
 				const repls = this.cfg.getReplacersForDocumentType(editor.document.languageId);
