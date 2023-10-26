@@ -127,13 +127,13 @@
 									"ip"
 								],
 								[
-									"e([bhw])",
+									"e([bhmlsw])",
 									"$1e",
 									"ip"
 								],
 								[
-									"pu",
-									"up",
+									"([ps])u",
+									"u$1",
 									"ip"
 								],
 								[
@@ -148,7 +148,7 @@
 									"ip"
 								],
 								[
-									"([fns])i",
+									"([fnst])i",
 									"i$1",
 									"ip"
 								],
@@ -163,17 +163,22 @@
 									"ip"
 								],
 								[
-									"([bcr]a|(br|l|sp)i|[ms]e|scu)t(le|el)",
+									"([br]a)t(le|el)",
+									"$1tt$2",
+									"ip"
+								],
+								[
+									"((br?|pr?|s[pw]?|t[rw]?|[cnrw])a|([bgp]r|kn?|[lmv]|pr|s[hkmnp]|tw?|wh)i|([fkmnp]|sp?)e|([bdhmprt]|cr|sp)o|([bcgr]|dr|s[ch]?)u)tle",
 									"$1ttle",
 									"ip"
 								],
 								[
-									"(teh|hte|t[he])([my])?",
+									"(teh|hte|t[he])([bmouy])?",
 									"the$2",
 									"ip"
 								],
 								[
-									"lie([cfkmnv])",
+									"lie([cfgklmntv])",
 									"li$1e",
 									"ip"
 								],
