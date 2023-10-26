@@ -74,6 +74,7 @@ Any list-items following the 3rd one are ignored. In the examples below with 4 i
 
 ## Known Issues / TODO
 
+- Continue adding/fixing the default replacers... this is never-ending
 - I would prefer to match teh scope of the current position, instead of/in addition to, document language, but AFAIK, VSC doesn't expose this... yet? I may look into 3rd party solutions for this in the future...
 - Fix typ0s in this file
 
