@@ -199,8 +199,23 @@
 									"ip"
 								],
 								[
-									"wl?(il|li)",
-									"will",
+									"([fht])l?al",
+									"$1ll",
+									"ip"
+								],
+								[
+									"([bcgw])l?al(ed)?",
+									"$1all$2",
+									"ip"
+								],
+								[
+									"([bdghps])l?il",
+									"$1ill",
+									"ip"
+								],
+								[
+									"([fkmtw])l?il(ed)?",
+									"$1ill$3",
 									"ip"
 								],
 								[
