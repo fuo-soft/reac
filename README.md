@@ -1,6 +1,6 @@
 # reac README
 
-regexp-based auto correction
+regexp-based auto correction with case preservation and transformation
 
 ## Features
 
@@ -12,6 +12,9 @@ Auto-corrects typ0s using regexp-base rules, with extended flags which allow for
 
 ## Extension Settings
 
+`reac.triggerPattern`: The regexp used to trigger auto-correct. Defaults to non-word characters (/\W/)
+`reac.wordPattern`: The regexp used to match the word to be replaced. Defaults to word characters (/\w+$/)
+
 The `reac.replacers` setting contains all of the rules for auto-correct.
 
 First, the language of the current file is matched against all `languages` regexps, in order. So in the example below, a markdown file would use the first and the third block. A C file would use the first and the second.
@@ -20,14 +23,14 @@ First, the language of the current file is matched against all `languages` regex
 
 ### Flags
 - Standard Regexp Flags
-  - g: global replace; usually it's just first match. you should probably combine with 's' below
-  - i: case-insensitive match
+  - `g`: global replace; usually it's just first match. you should probably combine with 's' below
+  - `i`: case-insensitive match
 - Additional
-  - s: substring; by default, all patterns are wrapped in ^/$ to force a full string match. this prevents that behaviour
-  - u: transform replacement to UPPERcase after replacement regardles of starting case
-  - l: transform replacement to lowercase after replacement regardles of starting case
-  - t: transform replacement to Titlecase after replacement regardles of starting case
-  - p: preserve case. If Teh is typed, it will be corrected as The. teh=the TEH=THE
+  - `s`: substring; by default, all patterns are wrapped in ^/$ to force a full string match. this prevents that behaviour
+  - `u`: transform replacement to UPPERcase after replacement regardles of starting case
+  - `l`: transform replacement to lowercase after replacement regardles of starting case
+  - `t`: transform replacement to Titlecase after replacement regardles of starting case
+  - `p`: preserve case. If Teh is typed, it will be corrected as The. teh=the TEH=THE
 
 Any list-items following the 3rd one are ignored. In the examples below with 4 items, the 4th is a "comment" (helps with debugging sometimes)
 ```

@@ -23,9 +23,9 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "reac.reloadCfg",
+				"command": "reac.performAutoCorrect",
 				"category": "reac",
-				"title": "Reload Configuration"
+				"title": "Performs auto-correction on the selected text or the word preceding the caret"
 			}
 		],
 		"configuration": {
@@ -166,6 +166,33 @@
 									"([br]a)t(le|el)",
 									"$1tt$2",
 									"ip"
+								],
+								[
+									"(bl?|cr|f[lr]?|qu|[hjlmprt]|s[hlmn]?|tr?|w[hr])(cak|akc)",
+									"$1ack",
+									"ip"
+								],
+								[
+									"(ch|[dhn]|wr)(cek|ekc)",
+									"$1eck",
+									"ip"
+								],
+								[
+									"(b[ru]|c[hlr]|fl|k[ln]?|pr?|qu|s[hlnptw]?|t[hrw]?|[dhlmnrw])(cik|ikc)",
+									"$1ick",
+									"ip"
+								],
+								[
+									"([c])(cok|okc)",
+									"$1ock",
+									"ip",
+									"TODO"
+								],
+								[
+									"([f])(cuk|ukc)",
+									"$1uck",
+									"ip",
+									"TODO"
 								],
 								[
 									"((br?|pr?|s[pw]?|t[rw]?|[cnrw])a|([bgp]r|kn?|[lmv]|pr|s[hkmnp]|tw?|wh)i|([fkmnp]|sp?)e|([bdhmprt]|cr|sp)o|([bcgr]|dr|s[ch]?)u)tle",
