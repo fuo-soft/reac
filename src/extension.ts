@@ -43,12 +43,83 @@ class AutoCorrect
 		this.cfg = new Cfg();
 
 		context.subscriptions.push(
-			vsc.commands.registerCommand('reac.reloadCfg', () => {
-				this.cfg.ensureCfgLoaded(true);
+			//vsc.commands.registerCommand('reac.reloadCfg', () => {
+			//	this.cfg.ensureCfgLoaded(true);
+			//})
+			vsc.commands.registerCommand('reac.performAutoCorrect', () => {
+				this.performAutoCorrect();
 			})
 		);
 
 		vsc.workspace.onDidChangeTextDocument(evt => this.onDidChangeTextDocument(evt));
+	}
+
+	getPreviousWordRange(editor: vsc.TextEditor, selection: vsc.Selection)
+	{
+		const lineStart = new vsc.Position(selection.start.line, 0);
+		const line = new vsc.Range(lineStart, selection.start);
+		const text = editor.document.getText(line);
+		const m = text.match(this.cfg.wordPattern);
+
+		if (m) {
+			const wordStart = lineStart.translate(0, m.index);
+			return new vsc.Range(wordStart, wordStart.translate(0, m[0].length));
+		}
+	}
+
+	getReplacementText(editor: vsc.TextEditor, text: string)
+	{
+		const repls = this.cfg.getReplacersForDocumentType(editor.document.languageId);
+
+		if (repls) {
+			for (const repl of repls)
+			{
+				const m = text.match(repl.regex);
+
+				if (m) {
+					const nt = text.replace(repl.regex, repl.repl);
+					const res = transformText(nt, text, repl.transform);
+
+					console.log('FOUND REPLACEMENT FOR "%O" with "%O" (%O)', text, res, repl);
+					return res;
+				}
+			}
+		}
+	}
+
+	performReplacement(editor: vsc.TextEditor, rng: vsc.Range, repl: string)
+	{
+		editor.edit(e => {
+			e.replace(rng, repl);
+		});
+	}
+
+	performAutoCorrect()
+	{
+		const editor = vsc.window.activeTextEditor;
+
+		if (!this.cfg.ensureCfgLoaded(false)) {
+			console.warn('no cfg');
+			return;
+		}
+		
+		if (editor)
+		{
+			const { selection } = editor;
+			const rng = (selection.active)
+				? editor.selection
+				: this.getPreviousWordRange(editor, selection);
+
+			if (rng)
+			{
+				const text = editor.document.getText(rng);
+				const repl = this.getReplacementText(editor, text);
+
+				if (repl) {
+					this.performReplacement(editor, rng, repl);
+				}
+			}
+		}
 	}
 
 	onDidChangeTextDocument(evt: vsc.TextDocumentChangeEvent)
@@ -60,55 +131,22 @@ class AutoCorrect
 			return;
 		}
 		
-		if (editor && editor.document === evt.document &&
-			evt.contentChanges.length && evt.contentChanges[0].text.match(this.cfg.triggerPattern))
+		if (editor &&
+			editor.document === evt.document &&
+			evt.contentChanges.length &&
+			evt.contentChanges[0].text.match(this.cfg.triggerPattern))
 		{
 			const { selection } = editor;
-			const { start } = selection;
-			const lineStart = new vsc.Position(selection.start.line, 0);
-			const line = new vsc.Range(lineStart, start);
-			const text = editor.document.getText(line);
-			const last = text.match(this.cfg.wordPattern);
+			const rng = this.getPreviousWordRange(editor, selection);
 
-			console.log('checking %o', last);
+			if (rng) {
+				const repl = this.getReplacementText(editor, editor.document.getText(rng));
 
-			if (last)
-			{
-				const repls = this.cfg.getReplacersForDocumentType(editor.document.languageId);
-
-				if (repls)
-				{
-					const nt = this.findReplacementText(last[0], repls);
-
-					if (nt) {
-						editor.edit(e => {
-							const wordStart = lineStart.translate(0, last.index);
-							const rng = new vsc.Range(wordStart, wordStart.translate(0, last[0].length));
-
-							e.replace(rng, nt);
-						});
-					}
+				if (repl) {
+					this.performReplacement(editor, rng, repl);
 				}
 			}
 		}
-	}
-
-	findReplacementText(text: string, repls: Replacer[])
-	{
-		for (const repl of repls)
-		{
-			const m = text.match(repl.regex);
-
-			if (m) {
-				const nt = text.replace(repl.regex, repl.repl);
-				const res = transformText(nt, text, repl.transform);
-
-				console.log('REPLACING "%O" with "%O" (%O)', text, res, repl);
-				return res;
-			}
-		}
-
-		return null;
 	}
 }
 
