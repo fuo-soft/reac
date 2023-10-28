@@ -58,7 +58,7 @@
 									"([a-z])\\1{2,}",
 									"$1$1",
 									"igsp",
-									"tooo many"
+									"toooo many"
 								]
 							]
 						},
@@ -112,21 +112,6 @@
 									"ip"
 								],
 								[
-									"([bcfghtw])([ai])l",
-									"$1$2ll",
-									"ip"
-								],
-								[
-									"([kstw])il",
-									"$1ill",
-									"ip"
-								],
-								[
-									"a([dty])n",
-									"an$1",
-									"ip"
-								],
-								[
 									"e([bhmlsw])",
 									"$1e",
 									"ip"
@@ -134,17 +119,6 @@
 								[
 									"([ps])u",
 									"u$1",
-									"ip"
-								],
-								[
-									"(fro?|ofr|orf)",
-									"for",
-									"ip",
-									"i'm on the fence about including 'fro' as a mispelling"
-								],
-								[
-									"ti(s)?",
-									"it$1",
 									"ip"
 								],
 								[
@@ -160,6 +134,57 @@
 								[
 									"o([gst])",
 									"$1o",
+									"ip"
+								],
+								[
+									"([hmps])u",
+									"u$1",
+									"ip"
+								],
+								[
+									"([bcfghtw])([ai])l",
+									"$1$2ll",
+									"ip"
+								],
+								[
+									"([kstw])il",
+									"$1ill",
+									"ip"
+								],
+								[
+									"([fht])l?al",
+									"$1ll",
+									"ip"
+								],
+								[
+									"([bcgw])l?al(ed)?",
+									"$1all$2",
+									"ip"
+								],
+								[
+									"([bdghps])l?il",
+									"$1ill",
+									"ip"
+								],
+								[
+									"([fkmtw])l?il(ed)?",
+									"$1ill$3",
+									"ip"
+								],
+								[
+									"a([dty])n",
+									"an$1",
+									"ip"
+								],
+								[
+									"(fro?|ofr|orf)",
+									"for",
+									"ip",
+									"i'm on the fence about including 'fro' as a mispelling"
+								],
+								[
+									"ti(s)?",
+									"it$1",
 									"ip"
 								],
 								[
@@ -183,16 +208,14 @@
 									"ip"
 								],
 								[
-									"([c])(cok|okc)",
+									"(b[lr]?|c[hlr]?|[dhjlmnr]|f[lr]|kn|pl?|s[hlmnpt]?|tr?)(cok|okc)",
 									"$1ock",
-									"ip",
-									"TODO"
+									"ip"
 								],
 								[
-									"([f])(cuk|ukc)",
+									"([bdfhjlmry]|c[hlr]?|gl?|kl|pl?|s[hnt]?|tr?)(cuk|ukc)",
 									"$1uck",
-									"ip",
-									"TODO"
+									"ip"
 								],
 								[
 									"((br?|pr?|s[pw]?|t[rw]?|[cnrw])a|([bgp]r|kn?|[lmv]|pr|s[hkmnp]|tw?|wh)i|([fkmnp]|sp?)e|([bdhmprt]|cr|sp)o|([bcgr]|dr|s[ch]?)u)tle",
@@ -216,33 +239,8 @@
 									"Special case: 'ten' is a word"
 								],
 								[
-									"th?ere?",
-									"there",
-									"ip"
-								],
-								[
-									"([hmps])u",
-									"u$1",
-									"ip"
-								],
-								[
-									"([fht])l?al",
-									"$1ll",
-									"ip"
-								],
-								[
-									"([bcgw])l?al(ed)?",
-									"$1all$2",
-									"ip"
-								],
-								[
-									"([bdghps])l?il",
-									"$1ill",
-									"ip"
-								],
-								[
-									"([fkmtw])l?il(ed)?",
-									"$1ill$3",
+									"th?e([mrs])e?",
+									"the$1e",
 									"ip"
 								],
 								[
