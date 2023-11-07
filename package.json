@@ -152,12 +152,12 @@
 									"ip"
 								],
 								[
-									"([fht])l?al",
+									"([ht])l?al",
 									"$1ll",
 									"ip"
 								],
 								[
-									"([bcgw])l?al(ed)?",
+									"([bcfgw])l?al(s|ed|ing)?",
 									"$1all$2",
 									"ip"
 								],
@@ -223,23 +223,17 @@
 									"ip"
 								],
 								[
-									"(teh|hte|t[he])([bmouy])?",
-									"the$2",
-									"ip"
-								],
-								[
 									"lie([cfgklmntv])",
 									"li$1e",
 									"ip"
 								],
 								[
-									"(teh|hte|th)n",
-									"then",
-									"ip",
-									"Special case: 'ten' is a word"
+									"((([they])(\\W*?\\1)){4}|tey)",
+									"they",
+									"ip"
 								],
 								[
-									"th?e([mrs])e?",
+									"th?e?([rs])e?",
 									"the$1e",
 									"ip"
 								],
