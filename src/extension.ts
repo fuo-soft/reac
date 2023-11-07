@@ -34,24 +34,26 @@ function transformText(text: string, original: string, how?: string)
 	return text;
 }
 
-class AutoCorrect
+export class AutoCorrect
 {
 	readonly cfg: Cfg;
 
-	constructor(private context: vsc.ExtensionContext)
+	constructor(private context?: vsc.ExtensionContext)
 	{
 		this.cfg = new Cfg();
 
-		context.subscriptions.push(
-			//vsc.commands.registerCommand('reac.reloadCfg', () => {
-			//	this.cfg.ensureCfgLoaded(true);
-			//})
-			vsc.commands.registerCommand('reac.performAutoCorrect', () => {
-				this.performAutoCorrect();
-			})
-		);
+		if (context) {
+			context.subscriptions.push(
+				//vsc.commands.registerCommand('reac.reloadCfg', () => {
+				//	this.cfg.ensureCfgLoaded(true);
+				//})
+				vsc.commands.registerCommand('reac.performAutoCorrect', () => {
+					this.performAutoCorrect();
+				})
+			);
 
-		vsc.workspace.onDidChangeTextDocument(evt => this.onDidChangeTextDocument(evt));
+			vsc.workspace.onDidChangeTextDocument(evt => this.onDidChangeTextDocument(evt));
+		}
 	}
 
 	getPreviousWordRange(editor: vsc.TextEditor, selection: vsc.Selection)
@@ -67,9 +69,9 @@ class AutoCorrect
 		}
 	}
 
-	getReplacementText(editor: vsc.TextEditor, text: string)
+	getReplacementText(text: string, languageId: string)
 	{
-		const repls = this.cfg.getReplacersForDocumentType(editor.document.languageId);
+		const repls = this.cfg.getReplacersForDocumentType(languageId);
 
 		if (repls) {
 			for (const repl of repls)
@@ -79,8 +81,6 @@ class AutoCorrect
 				if (m) {
 					const nt = text.replace(repl.regex, repl.repl);
 					const res = transformText(nt, text, repl.transform);
-
-					console.log('FOUND REPLACEMENT FOR "%O" with "%O" (%O)', text, res, repl);
 					return res;
 				}
 			}
@@ -113,13 +113,19 @@ class AutoCorrect
 			if (rng)
 			{
 				const text = editor.document.getText(rng);
-				const repl = this.getReplacementText(editor, text);
+				const repl = this.getReplacementText(text, editor.document.languageId);
 
 				if (repl) {
+					console.log('FOUND REPLACEMENT FOR "%O" with "%O"', text, repl);
 					this.performReplacement(editor, rng, repl);
 				}
 			}
 		}
+	}
+
+	shouldAutoCorrect(text: string)
+	{
+		return text.match(this.cfg.triggerPattern);
 	}
 
 	onDidChangeTextDocument(evt: vsc.TextDocumentChangeEvent)
@@ -134,13 +140,13 @@ class AutoCorrect
 		if (editor &&
 			editor.document === evt.document &&
 			evt.contentChanges.length &&
-			evt.contentChanges[0].text.match(this.cfg.triggerPattern))
+			this.shouldAutoCorrect(evt.contentChanges[0].text))
 		{
 			const { selection } = editor;
 			const rng = this.getPreviousWordRange(editor, selection);
 
 			if (rng) {
-				const repl = this.getReplacementText(editor, editor.document.getText(rng));
+				const repl = this.getReplacementText(editor.document.getText(rng), editor.document.languageId);
 
 				if (repl) {
 					this.performReplacement(editor, rng, repl);
