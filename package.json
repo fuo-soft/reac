@@ -228,6 +228,11 @@
 									"ip"
 								],
 								[
+									"([flmnrst])giht",
+									"$1ight",
+									"ip"
+								],
+								[
 									"((([they])(\\W*?\\1)){4}|tey)",
 									"they",
 									"ip"
