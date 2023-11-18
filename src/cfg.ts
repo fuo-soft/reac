@@ -42,8 +42,8 @@ export class Replacer
 
 export default class Cfg
 {
-	private languageMap = new Map<string, Replacer[]>();
-	private all?: Repl[];
+	readonly languageMap = new Map<string, Replacer[]>();
+	private _all?: Repl[];
 	private _triggerPattern: RegExp = DEFAULT_TRIGGER_PATTERN;
 	private _wordPattern: RegExp = DEFAULT_WORD_PATTERN;
 
@@ -60,20 +60,23 @@ export default class Cfg
 		return this._wordPattern;
 	}
 
+	get all() {
+		return this._all;
+	}
+
 	ensureCfgLoaded(force: boolean)
 	{
-		if ((!this.all || force) && vsc.window.activeTextEditor)
+		if ((!this.all || force) )//&& vsc.window.activeTextEditor)
 		{
-			const cfg = vsc.workspace.getConfiguration(NAME, vsc.window.activeTextEditor.document.uri);
+			const cfg = vsc.workspace.getConfiguration(NAME);//, vsc.window.activeTextEditor?.document.uri);
 
-			this.all = cfg.get<Repl[]>('replacers') ?? [];
+			this._all = cfg.get<Repl[]>('replacers') ?? [];
 			this.languageMap.clear();
 
 			this._triggerPattern = new RegExp(cfg.get('triggerPattern', DEFAULT_TRIGGER_PATTERN));
 			this._wordPattern = new RegExp(cfg.get('wordPattern', DEFAULT_WORD_PATTERN));
-
-			console.log('loaded cfg tp=%o wp=%o all=%o',
-				this._triggerPattern, this._wordPattern, this.all);
+			//console.log('loaded cfg tp=%o wp=%o all=%o',
+			//	this._triggerPattern, this._wordPattern, this.all);
 		}
 
 		return this.all;
@@ -95,7 +98,7 @@ export default class Cfg
 				.map(d => d["patterns"].map(p => new Replacer(p)))
 				.flat();
 			
-				console.log('LANG %s: %O', languageId, repls);
+				//console.log('LANG %s: %O', languageId, repls);
 				this.languageMap.set(languageId, repls);
 		}
 

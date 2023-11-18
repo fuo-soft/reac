@@ -1,15 +1,58 @@
 import * as assert from 'assert';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
-import * as vscode from 'vscode';
-// import * as myExtension from '../../extension';
+import * as vsc from 'vscode';
+import { AutoCorrect } from '../../extension';
+//import * as perms from './perms.json';
 
 suite('Extension Test Suite', () => {
-	vscode.window.showInformationMessage('Start all tests.');
+	vsc.window.showInformationMessage('Start all tests.');
+	const ac = new AutoCorrect();
 
-	test('Sample test', () => {
-		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
+	ac.cfg.ensureCfgLoaded(true);
+
+	test('Test Triggering', () => {
+		[' ', '.', ',', ':', '\'', '"'].forEach(ch => {
+			assert.ok(
+				ac.shouldAutoCorrect(ch),
+				`"${ch}" should trigger auto-complete`
+			);
+		});
+
+		['a', '1', 'W', '_', 'd'].forEach(ch => {
+			assert. ok(
+				!ac.shouldAutoCorrect(ch),
+				`"${ch}" should NOT trigger auto-complete`
+			);
+		});
+	});
+
+	test('Test Corrections', () =>
+	{
+		const LANG = 'markdown';
+	
+		[
+			["Who", "WHo"],
+			["will", "wlil", "wil"],
+			["the", "teh", "te", "hte", "th"],
+		].forEach((words, index) => {
+			const word = words[0];
+			words.slice(1).forEach(mspll => {
+				//const repls = ac.cfg.getReplacersForDocumentType(LANG);
+				const repl = ac.getReplacementText(mspll, LANG);
+				assert.strictEqual(
+					repl, word,
+					`"${repl}" should correct to "${word}" (${index}/"${mspll}")`
+				);
+			});
+		});
+
+		[
+			"reign",
+		].forEach((word, index) => {
+			const repl = ac.getReplacementText(word, LANG);
+			assert.strictEqual(
+				repl, undefined,
+				`"${repl}" should NOT be corrected (${index}/"${word}")`
+			);
+		});
 	});
 });
