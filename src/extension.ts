@@ -81,6 +81,7 @@ export class AutoCorrect
 				if (m) {
 					const nt = text.replace(repl.regex, repl.repl);
 					const res = transformText(nt, text, repl.transform);
+					console.log('GOT REPLACEMENT %O to %O', repl.regex, res);
 					return res;
 				}
 			}

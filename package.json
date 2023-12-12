@@ -127,7 +127,7 @@
 									"ip"
 								],
 								[
-									"([fhnr])o",
+									"([fhr])o",
 									"o$1",
 									"ip"
 								],
@@ -139,6 +139,11 @@
 								[
 									"([hmps])u",
 									"u$1",
+									"ip"
+								],
+								[
+									"([bcfhstwy])l?el",
+									"$1ell",
 									"ip"
 								],
 								[
@@ -188,6 +193,16 @@
 									"ip"
 								],
 								[
+									"h([dmst])i",
+									"hi$1",
+									"ip"
+								],
+								[
+									"h([mnrwy])e",
+									"he$1",	
+									"ip"
+								],
+								[
 									"([br]a)t(le|el)",
 									"$1tt$2",
 									"ip"
@@ -233,18 +248,43 @@
 									"ip"
 								],
 								[
-									"((([they])(\\W*?\\1)){4}|tey)",
-									"they",
-									"ip"
-								],
-								[
 									"th?e?([rs])e?",
 									"the$1e",
 									"ip"
 								],
 								[
+									"(t[he]|hte|teh)",
+									"the",
+									"ip"
+								],
+								[
+									"(taht|htat|thta)",
+									"that",
+									"ip"
+								],
+								[
+									"(tahn|htan|thna)",
+									"than",
+									"ip"
+								],
+								[
+									"(tehn|hten|thne)",
+									"then",
+									"ip"
+								],
+								[
+									"(tehy|htey|thye)",
+									"they",
+									"ip"
+								],
+								[
 									"([fk])itler",
 									"$1ilter",
+									"ip"
+								],
+								[
+									"(.+[^aeiuo])ign$",
+									"$1ing",
 									"ip"
 								],
 								[
