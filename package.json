@@ -152,8 +152,18 @@
 									"ip"
 								],
 								[
-									"([kstw])il",
+									"([kstw])l?il",
 									"$1ill",
+									"ip"
+								],
+								[
+									"(s[hkptw]|[dfgt]r|)l?il",
+									"$1ill",
+									"ip"
+								],
+								[
+									"ht(.+)",
+									"th$1",
 									"ip"
 								],
 								[
@@ -283,9 +293,24 @@
 									"ip"
 								],
 								[
+									"([bcfhstwy])lel(s?)",
+									"$1ell$2",
+									"ip"
+								],
+								[
 									"(.+[^aeiuo])ign$",
 									"$1ing",
 									"ip"
+								],
+								[
+									"([BHMW])E",
+									"$&",
+									"t"
+								],
+								[
+									"I([FNST])",
+									"$&",
+									"t"
 								],
 								[
 									"w(ehn|hne)",
