@@ -139,13 +139,17 @@ export class AutoCorrect
 		}
 		
 		if (editor && editor.document === evt.document && evt.contentChanges.length &&
+			evt.contentChanges[0].range.start.isEqual(editor.selection.start) &&
 			this.shouldAutoCorrect(evt.contentChanges[0].text))
 		{
-			const { selection } = editor;
-			const rng = this.getPreviousWordRange(editor, selection);
+			const rng = this.getPreviousWordRange(editor, editor.selection);
 
-			if (rng) {
-				const repl = this.getReplacementText(editor.document.getText(rng), editor.document.languageId);
+			if (rng)
+			{
+				const repl = this.getReplacementText(
+					editor.document.getText(rng),
+					editor.document.languageId
+				);
 
 				console.log('replace due to changes %O', evt.contentChanges);
 				if (repl) {
