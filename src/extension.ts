@@ -138,9 +138,7 @@ export class AutoCorrect
 			return;
 		}
 		
-		if (editor &&
-			editor.document === evt.document &&
-			evt.contentChanges.length &&
+		if (editor && editor.document === evt.document && evt.contentChanges.length &&
 			this.shouldAutoCorrect(evt.contentChanges[0].text))
 		{
 			const { selection } = editor;
@@ -149,6 +147,7 @@ export class AutoCorrect
 			if (rng) {
 				const repl = this.getReplacementText(editor.document.getText(rng), editor.document.languageId);
 
+				console.log('replace due to changes %O', evt.contentChanges);
 				if (repl) {
 					this.performReplacement(editor, rng, repl);
 				}
